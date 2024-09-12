@@ -1,0 +1,84 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.blueiobase.app.android.vunglesdk.sample'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.blueiobase.app.android.vunglesdk.sample"
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName "1.0.0"
+        versionNameSuffix ""
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+//            java {
+//                srcDirs 'src/main/thirdPartyLibraries'
+//            }
+//
+//            assets {
+//                srcDirs 'src/main/thirdPartyAssets',
+//                        file("src/main/thirdPartyAssets/").listFiles()
+//            }
+//
+//            res {
+//                srcDirs 'src/main/res',
+//                        file("src/main/thirdPartyRes/").listFiles(),
+//                        'src/main/thirdPartyRes'
+//            }
+        }
+
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+dependencies {
+    def androidx_core = '1.13.1'
+    def androidx_activity = '1.9.2'
+    def appcompat_version = '1.7.0'
+    def constraint_layout_version = "2.1.4"
+    def material_version = '1.12.0'
+    def splashscreen_version = '1.0.1'
+
+    implementation fileTree(dir:'libs', include:'*jar')
+
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.activity:activity-ktx:$androidx_activity"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.core:core-splashscreen:$splashscreen_version"
+    implementation "androidx.core:core-ktx:$androidx_core"
+    implementation "com.google.android.material:material:$material_version"
+
+
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$androidx_junit"
+    androidTestImplementation "androidx.test:runner:$androidx_test"
+    androidTestImplementation "junit:junit:$junit_version"
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Temporary images in the cache directory -->
+    <cache-path name="cache_temp_images" path="default/images/temp/" />
+    <!-- Temporary images in the cache directory in the external storage. -->
+    <external-cache-path name="external_cache_temp_images" path="default/images/temp/" />
+</paths>
