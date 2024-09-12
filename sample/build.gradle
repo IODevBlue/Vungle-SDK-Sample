@@ -66,6 +66,7 @@ dependencies {
     def constraint_layout_version = "2.1.4"
     def material_version = '1.12.0'
     def splashscreen_version = '1.0.1'
+    def vunglesdk_version = '7.4.1'
 
     implementation fileTree(dir:'libs', include:'*jar')
 
@@ -75,7 +76,7 @@ dependencies {
     implementation "androidx.core:core-splashscreen:$splashscreen_version"
     implementation "androidx.core:core-ktx:$androidx_core"
     implementation "com.google.android.material:material:$material_version"
-
+    implementation "com.vungle:vungle-ads:$vunglesdk_version"
 
     androidTestImplementation "androidx.test.ext:junit:$androidx_junit"
     androidTestImplementation "androidx.test.ext:junit-ktx:$androidx_junit"

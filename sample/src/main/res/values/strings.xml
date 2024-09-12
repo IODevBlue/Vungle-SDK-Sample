@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Vungle SDK Sample</string>
 
+    <string name="interstitial_ads">Interstitial Ads</string>
+    <string name="rewarded_ads">Rewarded Ads</string>
+    <string name="banner_ads">Banner Ads</string>
+
+    <string name="load_ad">Load Ad</string>
+    <string name="destroy_ad">Destroy Ad</string>
+
+
 </resources>

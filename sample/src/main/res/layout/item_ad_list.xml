@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/item_ad_list_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="monospace"
+        android:gravity="start|center"
+        android:padding="@dimen/padding_10dp"
+        android:textSize="@dimen/text_size_17"
+        tools:text="Interstitial Ads"
+        />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/item_ad_list_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_ad_list_name_tv"
+        app:dividerColor="@android:color/darker_gray"
+        />
+
+</RelativeLayout>
