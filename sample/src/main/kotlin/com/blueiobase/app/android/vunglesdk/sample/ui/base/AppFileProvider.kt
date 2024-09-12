@@ -10,6 +10,7 @@ import com.blueiobase.app.android.vunglesdk.sample.R
  * @author IO DevBlue
  * @since 1.0.0
  */
+@Suppress("unused")
 class AppFileProvider: FileProvider(R.xml.provider_file_paths) {
     companion object {
         /** The authority used to identify this [FileProvider]. */

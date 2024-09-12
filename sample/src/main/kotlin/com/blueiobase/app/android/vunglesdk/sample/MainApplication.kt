@@ -16,8 +16,8 @@ class MainApplication: Application() {
     ///////////////////////////////////////////////////////////////////////////
     // VARIABLES
     ///////////////////////////////////////////////////////////////////////////
-    /** The global [SharedPreferences] instance. */
-    private val sharedPreferences: SharedPreferences by lazy { getSharedPreferences("Vungle-SDK-Sample", MODE_PRIVATE) }
+//    /** The global [SharedPreferences] instance. */
+//    private val sharedPreferences: SharedPreferences by lazy { getSharedPreferences("Vungle-SDK-Sample", MODE_PRIVATE) }
 
     ///////////////////////////////////////////////////////////////////////////
     // OVERRIDE FUNCTIONS
