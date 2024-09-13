@@ -48,6 +48,12 @@
 
         <!-- ACTIVITY -->
         <activity
+            android:name=".ui.activity.ads.NativeAdsActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.activity.main.MainActivity"
+            android:theme="@style/Theme.Shopper.NoActionBar"
+            />
+        <activity
             android:name=".ui.activity.ads.BannerAdsActivity"
             android:exported="false"
             android:parentActivityName=".ui.activity.main.MainActivity"

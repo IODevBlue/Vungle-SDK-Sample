@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blueiobase.app.android.vunglesdk.sample.R
 import com.blueiobase.app.android.vunglesdk.sample.ui.activity.ads.BannerAdsActivity
 import com.blueiobase.app.android.vunglesdk.sample.ui.activity.ads.InterstitialAdsActivity
+import com.blueiobase.app.android.vunglesdk.sample.ui.activity.ads.NativeAdsActivity
 import com.blueiobase.app.android.vunglesdk.sample.ui.activity.ads.RewardedAdsActivity
 import com.blueiobase.app.android.vunglesdk.sample.ui.base.AbstractBaseActivity
 
@@ -22,6 +23,7 @@ class SupportedAdsAdapter(private val activity: AbstractBaseActivity) :
             activity.getString(R.string.interstitial_ads),
             activity.getString(R.string.rewarded_ads),
             activity.getString(R.string.banner_ads),
+            activity.getString(R.string.native_ads)
         )
     }
 
@@ -47,6 +49,7 @@ class SupportedAdsAdapter(private val activity: AbstractBaseActivity) :
                     activity.getString(R.string.interstitial_ads) -> activity.navigateTo(InterstitialAdsActivity::class.java)
                     activity.getString(R.string.rewarded_ads) -> activity.navigateTo(RewardedAdsActivity::class.java)
                     activity.getString(R.string.banner_ads) -> activity.navigateTo(BannerAdsActivity::class.java)
+                    activity.getString(R.string.native_ads) -> activity.navigateTo(NativeAdsActivity::class.java)
                 }
             }
 

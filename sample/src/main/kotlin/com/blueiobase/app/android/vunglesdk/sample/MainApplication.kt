@@ -1,7 +1,6 @@
 package com.blueiobase.app.android.vunglesdk.sample
 
 import android.app.Application
-import android.content.SharedPreferences
 import android.util.Log
 import com.vungle.ads.InitializationListener
 import com.vungle.ads.VungleAds
