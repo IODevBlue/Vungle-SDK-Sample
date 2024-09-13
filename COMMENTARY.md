@@ -61,6 +61,9 @@ These error kept reoccurring throughout development of this sample.
 My details
 ----------
 Application ID: 66e2a27deb92fa8376898d9e
+
 Banner Placement: BANNER-7819759
+
 Rewarded Placement: REWARDED-2709766
+
 Interstitial Placement: INTERSTITIAL-8664983

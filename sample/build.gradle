@@ -22,6 +22,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
         debug {
             debuggable true
@@ -32,26 +33,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-
-    sourceSets {
-        main {
-//            java {
-//                srcDirs 'src/main/thirdPartyLibraries'
-//            }
-//
-//            assets {
-//                srcDirs 'src/main/thirdPartyAssets',
-//                        file("src/main/thirdPartyAssets/").listFiles()
-//            }
-//
-//            res {
-//                srcDirs 'src/main/res',
-//                        file("src/main/thirdPartyRes/").listFiles(),
-//                        'src/main/thirdPartyRes'
-//            }
-        }
-
     }
 }
 
