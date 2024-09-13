@@ -49,3 +49,18 @@ or instead provide a hyperlink to the sample class file that used that particula
 Bot Performance
 ---------------
 - Surprisingly, the bot did fairly well. From giving step-by-step procedures, code fragments to helpful concise replies. I'd give a solid 8.5/10. It was helpful in answering most questions that I could solve on my end from my publisher page.
+
+Common Errors
+-------------
+These error kept reoccurring throughout development of this sample.
+- onAdFailedToLoad: null || Error: Ads retry-after: Server is busy. 
+- onAdFailedToLoad: null || Error: Ads: Server Retry Error active.
+- InvalidWaterfallPlacementError: header bidding status does not match with loadAd parameters.
+- No advertisements are available for your current bid. Please try again later.
+
+My details
+----------
+Application ID: 66e2a27deb92fa8376898d9e
+Banner Placement: BANNER-7819759
+Rewarded Placement: REWARDED-2709766
+Interstitial Placement: INTERSTITIAL-8664983
