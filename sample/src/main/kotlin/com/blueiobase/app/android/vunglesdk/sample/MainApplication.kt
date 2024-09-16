@@ -26,7 +26,7 @@ class MainApplication: Application() {
     ///////////////////////////////////////////////////////////////////////////
     override fun onCreate() {
         super.onCreate()
-        VungleAds.init(this, VungleAdConfig.APP_ID, object : InitializationListener {
+        VungleAds.init(this, VungleAdConfig.VUNGLE_APPLICATION_ID_2, object : InitializationListener {
             override fun onSuccess() {
                 Log.d(TAG, "Vungle SDK init onSuccess()")
             }

@@ -44,7 +44,7 @@ class InterstitialAdsActivity: AbstractBaseActivity(), BaseAdListener {
             isAdLoading = true
             loadAdButton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
-            interstitialAd = InterstitialAd(this, VungleAdConfig.INTERSTITIAL_PLACEMENT, AdConfig().apply {
+            interstitialAd = InterstitialAd(this, VungleAdConfig.INTERSTITIAL_ID_2, AdConfig().apply {
                 adOrientation = AdConfig.AUTO_ROTATE
             }).apply {
                 adListener = this@InterstitialAdsActivity

@@ -70,6 +70,17 @@
 
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/reward_text_view"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="monospace"
+            android:textSize="@dimen/text_size_17"
+            android:textColor="@color/black"
+            tools:text="Reward: $100" />
+
     </RelativeLayout>
 
 

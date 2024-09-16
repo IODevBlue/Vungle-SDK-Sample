@@ -51,7 +51,7 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
             loadAdButton.visibility = View.GONE
             destroyAdButton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
-            bannerAd = VungleBannerView(this, VungleAdConfig.BANNER_PLACEMENT, VungleAdSize.BANNER).apply {
+            bannerAd = VungleBannerView(this, VungleAdConfig.BANNER_ID_2, VungleAdSize.BANNER).apply {
                 adListener = this@BannerAdsActivity
                 load()
             }

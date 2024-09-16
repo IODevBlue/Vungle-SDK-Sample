@@ -1,14 +1,17 @@
 package com.blueiobase.app.android.vunglesdk.sample.ui.activity.ads
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import com.blueiobase.app.android.vunglesdk.sample.R
 import com.blueiobase.app.android.vunglesdk.sample.VungleAdConfig
 import com.blueiobase.app.android.vunglesdk.sample.ui.base.AbstractBaseActivity
+import com.google.android.material.snackbar.Snackbar
 import com.vungle.ads.AdConfig
 import com.vungle.ads.BaseAd
 import com.vungle.ads.BaseAdListener
@@ -20,20 +23,31 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
 
     /** A rewarded ad. */
     private var rewardedAd: RewardedAd? = null
+    /** Indicates whether an ad is currently loading. */
+    private var isAdLoading = false
+    /** The reward. */
+    private var reward = 0
+        set(value) {
+            field = value
+            rewardTextView.text = String.format(getString(R.string.reward_str), value)
+        }
 
     /** Button to trigger the loading of a rewarded ad. */
     private val loadAdButton: Button by lazy { findViewById(R.id.rewarded_load_ad_btn) }
-    /**  Progress bar displayed while the rewarded ad is loading. */
+    /** Progress bar displayed while the rewarded ad is loading. */
     private val progressBar: ProgressBar by lazy { findViewById(R.id.rewarded_ads_pb) }
-    /** Indicates whether an ad is currently loading. */
-    private var isAdLoading = false
+    /** Text to display the reward. */
+    private val rewardTextView: TextView by lazy { findViewById(R.id.reward_text_view) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rewarded_ads)
+        reward = 0
         configureToolbar(R.id.rewarded_ads_toolbar)
         savedInstanceState?.let {
             isAdLoading = it.getBoolean("isAdLoading")
+            reward = it.getInt("reward")
             if(isAdLoading) {
                 loadAdButton.visibility = View.GONE
                 progressBar.visibility = View.VISIBLE
@@ -43,7 +57,7 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
             isAdLoading = true
             loadAdButton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
-            rewardedAd = RewardedAd(this, VungleAdConfig.REWARD_PLACEMENT, AdConfig().apply {
+            rewardedAd = RewardedAd(this, VungleAdConfig.REWARDED_ID_2, AdConfig().apply {
                 adOrientation = AdConfig.AUTO_ROTATE
             }).apply {
                 adListener = this@RewardedAdsActivity
@@ -57,6 +71,7 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         super.onSaveInstanceState(outState)
         with(outState) {
             putBoolean("isAdLoading", isAdLoading)
+            putInt("reward", reward)
         }
     }
 
@@ -73,7 +88,12 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
-        Toast.makeText(this, "Ad ended", Toast.LENGTH_SHORT).show()
+        ++reward
+        Snackbar.make(findViewById(android.R.id.content), "Reward: $1", Snackbar.LENGTH_SHORT).apply {
+            setBackgroundTint(getColor(R.color.vungle_green))
+            setTextColor(Color.WHITE)
+            show()
+        }
     }
 
     override fun onAdFailedToLoad(baseAd: BaseAd, adError: VungleError) {

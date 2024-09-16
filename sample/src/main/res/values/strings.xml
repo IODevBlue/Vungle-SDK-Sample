@@ -8,6 +8,7 @@
 
     <string name="load_ad">Load Ad</string>
     <string name="destroy_ad">Destroy Ad</string>
+    <string name="reward_str">Reward: $%d</string>
 
 
 </resources>

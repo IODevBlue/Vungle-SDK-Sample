@@ -57,7 +57,7 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
             loadAdButton.visibility = View.GONE
             destroyAdButton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
-            nativeAd = NativeAd(this, VungleAdConfig.NATIVE_PLACEMENT).apply {
+            nativeAd = NativeAd(this, VungleAdConfig.NATIVE_ID_2).apply {
                 adOptionsPosition = NativeAd.TOP_LEFT
                 adListener = this@NativeAdsActivity
                 load()
