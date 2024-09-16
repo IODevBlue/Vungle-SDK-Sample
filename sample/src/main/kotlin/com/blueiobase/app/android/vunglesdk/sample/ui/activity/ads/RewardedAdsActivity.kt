@@ -37,7 +37,9 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
     /** Progress bar displayed while the rewarded ad is loading. */
     private val progressBar: ProgressBar by lazy { findViewById(R.id.rewarded_ads_pb) }
     /** Text to display the reward. */
-    private val rewardTextView: TextView by lazy { findViewById(R.id.reward_text_view) }
+    private val rewardTextView: TextView by lazy { findViewById(R.id.rewarded_text_view) }
+    /** TextView to display error messages. */
+    private val errorTextView: TextView by lazy { findViewById(R.id.rewarded_error_text_view) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,11 +54,14 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
                 loadAdButton.visibility = View.GONE
                 progressBar.visibility = View.VISIBLE
             }
+            errorTextView.text= savedInstanceState.getString("errorText", "")
+            errorTextView.visibility = savedInstanceState.getInt("errorVisibility", View.GONE)
         }
         loadAdButton.setOnClickListener {
             isAdLoading = true
             loadAdButton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
+            errorTextView.visibility = View.GONE
             rewardedAd = RewardedAd(this, VungleAdConfig.REWARDED_ID_2, AdConfig().apply {
                 adOrientation = AdConfig.AUTO_ROTATE
             }).apply {
@@ -72,6 +77,8 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         with(outState) {
             putBoolean("isAdLoading", isAdLoading)
             putInt("reward", reward)
+            putString("errorText", errorTextView.text.toString())
+            putInt("errorVisibility", errorTextView.visibility)
         }
     }
 
@@ -80,6 +87,7 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad clicked", Toast.LENGTH_SHORT).show()
     }
 
@@ -88,6 +96,7 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         ++reward
         Snackbar.make(findViewById(android.R.id.content), "Reward: $1", Snackbar.LENGTH_SHORT).apply {
             setBackgroundTint(getColor(R.color.vungle_green))
@@ -97,18 +106,28 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
     }
 
     override fun onAdFailedToLoad(baseAd: BaseAd, adError: VungleError) {
-        Log.e("RewardedAdsActivity", "onAdFailedToLoad: ${baseAd.eventId} || Error: ${adError.localizedMessage}")
+        val error = "Error: ${adError.localizedMessage}"
+        Log.e("RewardedAdsActivity", "onAdFailedToLoad: ${baseAd.eventId} || $error")
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        with(errorTextView) {
+            visibility = View.VISIBLE
+            text = error
+        }
         Toast.makeText(this, "Ad failed to load", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAdFailedToPlay(baseAd: BaseAd, adError: VungleError) {
-        Log.e("RewardedAdsActivity", "onAdFailedToPlay: ${baseAd.eventId} || Error: ${adError.localizedMessage}")
+        val error = "Error: ${adError.localizedMessage}"
+        Log.e("RewardedAdsActivity", "onAdFailedToPlay: ${baseAd.eventId} || $error")
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        with(errorTextView) {
+            visibility = View.VISIBLE
+            text = error
+        }
         Toast.makeText(this, "Ad failed to play", Toast.LENGTH_SHORT).show()
     }
 
@@ -117,6 +136,7 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad impression", Toast.LENGTH_SHORT).show()
     }
 
@@ -125,6 +145,7 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad left application", Toast.LENGTH_SHORT).show()
     }
 
@@ -133,6 +154,7 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad loaded", Toast.LENGTH_SHORT).show()
         rewardedAd?.let {
             if(it.canPlayAd()) {
@@ -146,6 +168,7 @@ class RewardedAdsActivity: AbstractBaseActivity(), BaseAdListener {
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad started", Toast.LENGTH_SHORT).show()
     }
 }

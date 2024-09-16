@@ -25,6 +25,8 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
 
     /** A native ad. */
     private var nativeAd: NativeAd? = null
+    /** Indicates whether an ad is currently loading. */
+    private var isAdLoading = false
 
     /** Button to trigger the loading of a native ad. */
     private val loadAdButton: Button by lazy { findViewById(R.id.native_load_ad_btn) }
@@ -36,8 +38,8 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
     private val contentRoot: RelativeLayout by lazy { findViewById(R.id.native_content_root) }
     /** Container for the native ad view.  */
     private val nativeAdContainer: FrameLayout by lazy { findViewById(R.id.native_ad_container) }
-    /** Indicates whether an ad is currently loading. */
-    private var isAdLoading = false
+    /** TextView to display error messages. */
+    private val errorTextView: TextView by lazy { findViewById(R.id.native_error_text_view) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +53,15 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
                 destroyAdButton.visibility = View.GONE
                 progressBar.visibility = View.VISIBLE
             }
+            errorTextView.text= savedInstanceState.getString("errorText", "")
+            errorTextView.visibility = savedInstanceState.getInt("errorVisibility", View.GONE)
         }
         loadAdButton.setOnClickListener {
             isAdLoading = true
             loadAdButton.visibility = View.GONE
             destroyAdButton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
+            errorTextView.visibility = View.GONE
             nativeAd = NativeAd(this, VungleAdConfig.NATIVE_ID_2).apply {
                 adOptionsPosition = NativeAd.TOP_LEFT
                 adListener = this@NativeAdsActivity
@@ -82,6 +87,8 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
         super.onSaveInstanceState(outState)
         with(outState) {
             putBoolean("isAdLoading", isAdLoading)
+            putString("errorText", errorTextView.text.toString())
+            putInt("errorVisibility", errorTextView.visibility)
         }
     }
 
@@ -91,6 +98,7 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad clicked", Toast.LENGTH_SHORT).show()
     }
 
@@ -100,24 +108,33 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.GONE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad ended", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAdFailedToLoad(baseAd: BaseAd, adError: VungleError) {
-        Log.e("BannerAdsActivity", "onAdFailedToLoad: ${baseAd.eventId} || Error: ${adError.localizedMessage}")
+        val error = "Error: ${adError.localizedMessage}"
+        Log.e("BannerAdsActivity", "onAdFailedToLoad: ${baseAd.eventId} || $error")
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
-        destroyAdButton.visibility = View.GONE
         progressBar.visibility = View.GONE
+        with(errorTextView) {
+            visibility = View.VISIBLE
+            text = error
+        }
         Toast.makeText(this, "Ad failed to load", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAdFailedToPlay(baseAd: BaseAd, adError: VungleError) {
-        Log.e("BannerAdsActivity", "onAdFailedToPlay: ${baseAd.eventId} || Error: ${adError.localizedMessage}")
+        val error = "Error: ${adError.localizedMessage}"
+        Log.e("BannerAdsActivity", "onAdFailedToPlay: ${baseAd.eventId} || $error")
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
-        destroyAdButton.visibility = View.GONE
         progressBar.visibility = View.GONE
+        with(errorTextView) {
+            visibility = View.VISIBLE
+            text = error
+        }
         Toast.makeText(this, "Ad failed to play", Toast.LENGTH_SHORT).show()
     }
 
@@ -127,6 +144,7 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad impression", Toast.LENGTH_SHORT).show()
     }
 
@@ -136,6 +154,7 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.GONE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad left application", Toast.LENGTH_SHORT).show()
     }
 
@@ -146,6 +165,7 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
         destroyAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
         Toast.makeText(this, "Ad loaded", Toast.LENGTH_SHORT).show()
+        errorTextView.visibility = View.GONE
         nativeAd?.let {
             if(!it.canPlayAd()) {
                 Toast.makeText(this, "Ad cannot play", Toast.LENGTH_SHORT).show()
@@ -183,6 +203,7 @@ class NativeAdsActivity: AbstractBaseActivity(), NativeAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad started", Toast.LENGTH_SHORT).show()
     }
 }

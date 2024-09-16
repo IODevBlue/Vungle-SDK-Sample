@@ -71,7 +71,7 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/reward_text_view"
+            android:id="@+id/rewarded_text_view"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,6 +80,23 @@
             android:textSize="@dimen/text_size_17"
             android:textColor="@color/black"
             tools:text="Reward: $100" />
+
+        <TextView
+            android:id="@+id/rewarded_error_text_view"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/padding_10dp"
+            android:layout_below="@id/rewarded_text_view"
+            android:fontFamily="monospace"
+            android:textSize="@dimen/text_size_17"
+            android:padding="20dp"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="@string/test_error"
+            />
 
     </RelativeLayout>
 

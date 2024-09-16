@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.blueiobase.app.android.vunglesdk.sample.R
 import com.blueiobase.app.android.vunglesdk.sample.VungleAdConfig
@@ -21,6 +22,8 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
 
     /** An banner ad. */
     private var bannerAd: VungleBannerView? = null
+    /** Indicates whether an ad is currently loading. */
+    private var isAdLoading = false
 
     /** Button to trigger the loading of a banner ad. */
     private val loadAdButton: Button by lazy { findViewById(R.id.banner_load_ad_btn) }
@@ -30,8 +33,8 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
     private val progressBar: ProgressBar by lazy { findViewById(R.id.banner_ads_pb) }
     /** Content root hosting all user interface content. */
     private val contentRoot: RelativeLayout by lazy { findViewById(R.id.banner_content_root) }
-    /** Indicates whether an ad is currently loading. */
-    private var isAdLoading = false
+    /** TextView to display error messages. */
+    private val errorTextView: TextView by lazy { findViewById(R.id.banner_error_text_view) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,11 +48,14 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
                 destroyAdButton.visibility = View.GONE
                 progressBar.visibility = View.VISIBLE
             }
+            errorTextView.text= savedInstanceState.getString("errorText", "")
+            errorTextView.visibility = savedInstanceState.getInt("errorVisibility", View.GONE)
         }
         loadAdButton.setOnClickListener {
             isAdLoading = true
             loadAdButton.visibility = View.GONE
             destroyAdButton.visibility = View.GONE
+            errorTextView.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
             bannerAd = VungleBannerView(this, VungleAdConfig.BANNER_ID_2, VungleAdSize.BANNER).apply {
                 adListener = this@BannerAdsActivity
@@ -80,6 +86,8 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
         super.onSaveInstanceState(outState)
         with(outState) {
             putBoolean("isAdLoading", isAdLoading)
+            putString("errorText", errorTextView.text.toString())
+            putInt("errorVisibility", errorTextView.visibility)
         }
     }
 
@@ -89,6 +97,7 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad clicked", Toast.LENGTH_SHORT).show()
     }
 
@@ -98,24 +107,35 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.GONE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad ended", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAdFailedToLoad(baseAd: BaseAd, adError: VungleError) {
-        Log.e("BannerAdsActivity", "onAdFailedToLoad: ${baseAd.eventId} || Error: ${adError.localizedMessage}")
+        val error = "Error: ${adError.localizedMessage}"
+        Log.e("BannerAdsActivity", "onAdFailedToLoad: ${baseAd.eventId} || $error")
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.GONE
         progressBar.visibility = View.GONE
+        with(errorTextView) {
+            visibility = View.VISIBLE
+            text = error
+        }
         Toast.makeText(this, "Ad failed to load", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAdFailedToPlay(baseAd: BaseAd, adError: VungleError) {
-        Log.e("BannerAdsActivity", "onAdFailedToPlay: ${baseAd.eventId} || Error: ${adError.localizedMessage}")
+        val error = "Error: ${adError.localizedMessage}"
+        Log.e("BannerAdsActivity", "onAdFailedToPlay: ${baseAd.eventId} || $error")
         isAdLoading = false
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.GONE
         progressBar.visibility = View.GONE
+        with(errorTextView) {
+            visibility = View.VISIBLE
+            text = error
+        }
         Toast.makeText(this, "Ad failed to play", Toast.LENGTH_SHORT).show()
     }
 
@@ -125,6 +145,7 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad impression", Toast.LENGTH_SHORT).show()
     }
 
@@ -134,6 +155,7 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.GONE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad left application", Toast.LENGTH_SHORT).show()
     }
 
@@ -143,6 +165,7 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad loaded", Toast.LENGTH_SHORT).show()
     }
 
@@ -152,6 +175,7 @@ class BannerAdsActivity: AbstractBaseActivity(), BannerAdListener {
         loadAdButton.visibility = View.VISIBLE
         destroyAdButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
         Toast.makeText(this, "Ad started", Toast.LENGTH_SHORT).show()
     }
 }

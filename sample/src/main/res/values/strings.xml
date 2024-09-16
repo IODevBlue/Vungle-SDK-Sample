@@ -10,5 +10,6 @@
     <string name="destroy_ad">Destroy Ad</string>
     <string name="reward_str">Reward: $%d</string>
 
+    <string name="test_error">Error: Header bidding status does not match with loadAd parameters</string>
 
 </resources>
